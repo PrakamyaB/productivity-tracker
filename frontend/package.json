@@ -2,6 +2,9 @@
   "name": "productivity-tracker-frontend",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+  "node": "18.x"
+},
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "axios": "^1.6.2",
