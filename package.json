@@ -1,0 +1,15 @@
+{
+  "name": "productivity-tracker",
+  "version": "1.0.0",
+  "description": "Personal Productivity Tracker — Full Stack App",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "seed": "cd backend && npm run seed",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": ["productivity", "habit-tracker", "react", "nodejs", "mongodb"],
+  "author": "Your Name",
+  "license": "MIT"
+}
