@@ -19,18 +19,21 @@ const { cgpaRouter, ttRouter, notesRouter, gamRouter, roomRouter } = require('./
 
 const app = express();
 
-
 // 🔐 Security middleware
 app.use(helmet());
 
-// 🌐 CORS
+// 🌐 FIXED CORS (simple + reliable)
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    process.env.FRONTEND_URL
+    'https://productivity-tracker-hqezuaf58-prakamyabs-projects.vercel.app'
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
+// handle preflight explicitly
+app.options('*', cors());
 
 
 // 🚦 Rate limiting
@@ -47,7 +50,6 @@ const authLimiter = rateLimit({
 });
 
 app.use('/api/', limiter);
-// ⚠️ Optional: comment this if debugging auth issues
 app.use('/api/auth', authLimiter);
 
 
@@ -62,7 +64,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-// ❤️ Health check (ONLY ONE)
+// ❤️ Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -104,6 +106,5 @@ app.use((err, req, res, next) => {
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 });
-
 
 module.exports = app;
