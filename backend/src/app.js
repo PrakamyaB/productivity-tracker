@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
+// Routes
 const authRoutes = require('./routes/auth');
 const habitRoutes = require('./routes/habits');
 const logRoutes = require('./routes/logs');
@@ -12,21 +13,24 @@ const goalRoutes = require('./routes/goals');
 const userRoutes = require('./routes/users');
 const aiRoutes = require('./routes/ai');
 
-
 const assignmentRoutes = require('./routes/assignments');
 const examRoutes = require('./routes/exams');
 const { cgpaRouter, ttRouter, notesRouter, gamRouter, roomRouter } = require('./routes/studentRoutes');
 
 const app = express();
 
-// Security middleware
+
+// 🔐 Security middleware
 app.use(helmet());
+
+// 🌐 CORS
 app.use(cors({
-origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-credentials: true,
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
 }));
 
-// Rate limiting
+
+// 🚦 Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -40,23 +44,32 @@ const authLimiter = rateLimit({
 });
 
 app.use('/api/', limiter);
+// ⚠️ Optional: comment this if debugging auth issues
 app.use('/api/auth', authLimiter);
 
-// Body parsing
+
+// 📦 Body parsing
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Logging
+
+// 📜 Logging (only in dev)
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Health check
+
+// ❤️ Health check (ONLY ONE)
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    message: 'Backend working',
+    timestamp: new Date().toISOString(),
+  });
 });
 
-// Existing Routes
+
+// 🚀 API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/habits', habitRoutes);
 app.use('/api/logs', logRoutes);
@@ -73,12 +86,14 @@ app.use('/api/notes', notesRouter);
 app.use('/api/gamification', gamRouter);
 app.use('/api/studyrooms', roomRouter);
 
-// 404 handler
+
+// ❌ 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// Global error handler
+
+// ⚠️ Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
@@ -86,5 +101,6 @@ app.use((err, req, res, next) => {
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 });
+
 
 module.exports = app;
