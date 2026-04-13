@@ -44,6 +44,10 @@ const loginController = async (req, res) => {
 // Signup route
 router.post('/signup', signupController);
 
+router.post('/signup', (req, res) => {
+  res.status(200).json({ message: "NEW SIGNUP ROUTE WORKING" });
+});
+
 // Login route
 router.post('/login', loginController);
 
