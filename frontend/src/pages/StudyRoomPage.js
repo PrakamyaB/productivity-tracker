@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { formatDistanceToNow } from 'date-fns';
+import { Check, Copy, LogIn, Plus, Users, X } from 'lucide-react';
 
 export default function StudyRoomPage() {
   const [rooms, setRooms] = useState([]);

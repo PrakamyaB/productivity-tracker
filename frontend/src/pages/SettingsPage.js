@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { usersAPI } from '../services/api';
 import toast from 'react-hot-toast';
+import { Bell, Lock, Save, User } from 'lucide-react';
 
 const Section = ({ title, icon: Icon, children }) => (
   <div className="card card-padding">

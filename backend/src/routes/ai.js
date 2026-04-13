@@ -2,13 +2,24 @@ const express = require('express');
 const router = express.Router();
 const Groq = require('groq-sdk');
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+const getGroqClient = () => {
+  if (!process.env.GROQ_API_KEY) {
+    return null;
+  }
+
+  return new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+  });
+};
 
 // POST /api/ai/insights
 router.post('/insights', async (req, res) => {
   try {
+    const groq = getGroqClient();
+    if (!groq) {
+      return res.status(503).json({ error: "AI insights are not configured" });
+    }
+
     const { habits = [], logs = [], tasks = [] } = req.body;
 
     if (!habits.length && !logs.length && !tasks.length) {

@@ -23,17 +23,17 @@ const app = express();
 app.use(helmet());
 
 // 🌐 FIXED CORS (simple + reliable)
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://productivity-tracker-hqezuaf58-prakamyabs-projects.vercel.app'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+const corsOptions = {
+  origin: true,
   credentials: true,
-}));
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 
 // handle preflight explicitly
-app.options('*', cors());
+app.options('*', cors(corsOptions));
 
 
 // 🚦 Rate limiting
