@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, Zap, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 export default function SignupPage() {
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmRef = useRef(null);
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -13,6 +16,12 @@ export default function SignupPage() {
   const navigate = useNavigate();
 
   const validate = () => {
+    const form = {
+      name: nameRef.current?.value || '',
+      email: emailRef.current?.value || '',
+      password: passwordRef.current?.value || '',
+      confirm: confirmRef.current?.value || '',
+    };
     const e = {};
     if (!form.name.trim() || form.name.length < 2) e.name = 'Name must be at least 2 characters';
     if (!form.email) e.email = 'Email is required';
@@ -28,7 +37,10 @@ export default function SignupPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await signup(form.name, form.email, form.password);
+      const name = nameRef.current.value;
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
+      await signup(name, email, password);
       toast.success('Account created! Let\'s get productive 🚀');
       navigate('/dashboard');
     } catch (err) {
@@ -72,8 +84,7 @@ export default function SignupPage() {
                   className={`form-input ${errors.name ? 'error' : ''}`}
                   style={{ paddingLeft: 40 }}
                   placeholder="Alex Johnson"
-                  value={form.name}
-                  onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
+                  ref={nameRef}
                   autoComplete="name"
                 />
               </div>
@@ -89,8 +100,7 @@ export default function SignupPage() {
                   className={`form-input ${errors.email ? 'error' : ''}`}
                   style={{ paddingLeft: 40 }}
                   placeholder="alex@example.com"
-                  value={form.email}
-                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                  ref={emailRef}
                   autoComplete="email"
                 />
               </div>
@@ -106,8 +116,7 @@ export default function SignupPage() {
                   className={`form-input ${errors.password ? 'error' : ''}`}
                   style={{ paddingLeft: 40, paddingRight: 44 }}
                   placeholder="Min. 6 characters"
-                  value={form.password}
-                  onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
+                  ref={passwordRef}
                   autoComplete="new-password"
                 />
                 <button type="button" onClick={() => setShowPw(p => !p)} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}>
@@ -126,8 +135,7 @@ export default function SignupPage() {
                   className={`form-input ${errors.confirm ? 'error' : ''}`}
                   style={{ paddingLeft: 40 }}
                   placeholder="Re-enter password"
-                  value={form.confirm}
-                  onChange={e => setForm(p => ({ ...p, confirm: e.target.value }))}
+                  ref={confirmRef}
                   autoComplete="new-password"
                 />
               </div>
