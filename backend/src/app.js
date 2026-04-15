@@ -45,12 +45,13 @@ const limiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: 50,
+  skip: (req) => req.method === 'OPTIONS',
   message: { error: 'Too many auth attempts, please try again later.' }
 });
 
 app.use('/api/', limiter);
-app.use('/api/auth', authLimiter);
+app.use(['/api/auth/login', '/api/auth/signup'], authLimiter);
 
 
 // 📦 Body parsing
