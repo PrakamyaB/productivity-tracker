@@ -91,7 +91,7 @@ export default function AppLayout() {
                   style={({ isActive }) => ({
                     display: 'flex', alignItems: 'center', gap: 9,
                     padding: '8px 10px', borderRadius: 8, marginBottom: 4,
-                    fontSize: '0.8375rem', fontWeight: 500, textDecoration: 'none',
+                    fontSize: '0.8375rem', fontWeight: isActive ? 800 : 650, textDecoration: 'none',
                     color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                     background: isActive ? 'linear-gradient(135deg, var(--lilac-light), var(--pink-light))' : 'transparent',
                     border: isActive ? '1px solid var(--border)' : '1px solid transparent',

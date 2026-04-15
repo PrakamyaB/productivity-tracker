@@ -48,7 +48,7 @@ export default function LoginPage() {
       {/* Left - decorative */}
       <div style={{
         flex: 1,
-        background: 'linear-gradient(135deg, #ffe1ef 0%, #f0eaff 48%, #e5f2ff 100%)',
+        background: 'var(--auth-bg)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -82,7 +82,7 @@ export default function LoginPage() {
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 16, lineHeight: 1.1 }}>
             Track what<br />matters most.
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7, fontWeight: 600 }}>
             Build habits, log study hours, and gain insights into your productivity patterns.
           </p>
 
@@ -90,13 +90,13 @@ export default function LoginPage() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 32, justifyContent: 'center' }}>
             {['📊 Analytics', '🔥 Streaks', '🎯 Goals', '💡 Insights'].map(f => (
               <span key={f} style={{
-                background: 'rgba(255,255,255,0.62)',
+                background: 'var(--stat-card-bg)',
                 border: '1px solid var(--border)',
                 color: 'var(--text-secondary)',
+                fontWeight: 700,
                 padding: '6px 14px',
                 borderRadius: 99,
                 fontSize: '0.8125rem',
-                fontWeight: 500,
               }}>{f}</span>
             ))}
           </div>

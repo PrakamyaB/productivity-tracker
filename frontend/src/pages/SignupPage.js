@@ -53,7 +53,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #fbf7ff 0%, #fff6fb 46%, #e5f2ff 100%)', padding: '40px 20px', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--auth-bg)', padding: '40px 20px', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', width: 280, height: 280, borderRadius: '50%', background: 'rgba(242,154,194,0.24)', top: -80, left: -60 }} />
       <div style={{ position: 'absolute', width: 340, height: 340, borderRadius: '50%', background: 'rgba(127,185,242,0.22)', bottom: -120, right: -80 }} />
       <div style={{ width: '100%', maxWidth: 440 }}>
@@ -70,7 +70,7 @@ export default function SignupPage() {
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.875rem', fontWeight: 800, marginBottom: 8 }}>
             Start tracking today
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', fontWeight: 600 }}>
             Create your free account and take control of your productivity.
           </p>
         </div>

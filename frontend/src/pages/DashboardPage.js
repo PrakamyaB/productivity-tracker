@@ -13,16 +13,16 @@ import toast from 'react-hot-toast';
 const CHART_COLORS = ['#7c6ff2', '#f29ac2', '#7fb9f2', '#d8f45b', '#78b96e', '#c9b7ff', '#e9a94f'];
 
 const StatCard = ({ icon: Icon, label, value, sub, color = 'var(--accent)' }) => (
-  <div className="card card-padding" style={{ display: 'flex', flexDirection: 'column', gap: 12, minHeight: 136, background: `linear-gradient(145deg, ${color}22, rgba(255,255,255,0.72))`, position: 'relative', overflow: 'hidden' }}>
-    <span style={{ position: 'absolute', right: 16, top: 10, fontSize: '1.4rem', color, opacity: 0.55 }}>*</span>
+  <div className="card card-padding" style={{ display: 'flex', flexDirection: 'column', gap: 12, minHeight: 136, background: `linear-gradient(145deg, ${color}24, var(--stat-card-bg))`, position: 'relative', overflow: 'hidden' }}>
+    <span style={{ position: 'absolute', right: 16, top: 10, fontSize: '1.4rem', color, opacity: 0.7 }}>*</span>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>{label}</span>
       <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(255,255,255,0.72)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={18} color={color} />
       </div>
     </div>
-    <div style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 800, lineHeight: 1 }}>{value}</div>
-    {sub && <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{sub}</div>}
+    <div style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 800, lineHeight: 1, color: 'var(--text-primary)' }}>{value}</div>
+    {sub && <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>{sub}</div>}
   </div>
 );
 
@@ -81,15 +81,15 @@ export default function DashboardPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, animation: 'fadeIn 0.4s ease' }}>
       {/* Header */}
-      <div className="card card-padding" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 18, background: 'linear-gradient(135deg, rgba(255,225,239,0.82), rgba(229,242,255,0.82) 52%, rgba(240,234,255,0.9))', position: 'relative', overflow: 'hidden' }}>
+      <div className="card card-padding" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 18, background: 'var(--hero-bg)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', left: -40, bottom: -70, width: 260, height: 260, border: '2px solid rgba(216,244,91,0.65)', borderRadius: '50%' }} />
         <div style={{ position: 'absolute', right: 34, top: 18, fontSize: '2rem', color: 'var(--accent)', opacity: 0.55 }}>*</div>
         <div style={{ position: 'relative' }}>
-          <div className="badge" style={{ background: 'rgba(255,255,255,0.62)', border: '1px solid var(--border)', color: 'var(--text-secondary)', marginBottom: 14 }}>Weekly study desk</div>
+          <div className="badge" style={{ background: 'var(--stat-card-bg)', border: '1px solid var(--border)', color: 'var(--text-secondary)', marginBottom: 14 }}>Weekly study desk</div>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 4.2rem)', fontWeight: 800, marginBottom: 4, lineHeight: 0.98 }}>
             {getGreeting()}, {user?.name?.split(' ')[0]} 👋
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.98rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.98rem', fontWeight: 600 }}>
             {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
           </p>
         </div>
