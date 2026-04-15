@@ -4,7 +4,7 @@ import { useHabits } from '../hooks/useData';
 import toast from 'react-hot-toast';
 
 const CATEGORIES = ['Study', 'Health', 'Personal', 'Work', 'Fitness', 'Mindfulness', 'Creative', 'Social', 'Other'];
-const COLORS = ['#6366f1','#8b5cf6','#ec4899','#f59e0b','#10b981','#3b82f6','#ef4444','#14b8a6','#f97316'];
+const COLORS = ['#7c6ff2','#f29ac2','#7fb9f2','#78b96e','#e9a94f','#c9b7ff','#ef4444','#14b8a6','#d8f45b'];
 const ICONS = ['📚','💻','💪','🏃','🧘','📖','🎯','🎨','🎵','🌱','🏋️','✍️','🧠','💼','🔬','📝','⚡','🌟'];
 
 const defaultForm = { name: '', description: '', category: 'Study', color: '#6366f1', icon: '📚', targetHoursPerDay: 1, targetDaysPerWeek: 7 };
@@ -23,6 +23,8 @@ export default function HabitsPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name.trim()) return toast.error('Habit name is required');
+    const duplicate = habits.some(h => h._id !== editingHabit?._id && h.name.trim().toLowerCase() === form.name.trim().toLowerCase());
+    if (duplicate) return toast.error('That habit already exists');
     setSaving(true);
     try {
       if (editingHabit) {
@@ -55,7 +57,7 @@ export default function HabitsPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, animation: 'fadeIn 0.4s ease' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap' }}>
         <div>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, marginBottom: 4 }}>My Habits</h1>
           <p style={{ color: 'var(--text-secondary)' }}>{habits.length} habit{habits.length !== 1 ? 's' : ''} tracked</p>
@@ -80,7 +82,7 @@ export default function HabitsPage() {
       )}
 
       {/* Habits grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
         {habits.map(h => (
           <div key={h._id} className="card" style={{ overflow: 'hidden', borderTop: `4px solid ${h.color}` }}>
             <div style={{ padding: '20px' }}>
@@ -112,7 +114,7 @@ export default function HabitsPage() {
                   { icon: Clock, label: 'Target', value: `${h.targetHoursPerDay}h/day`, color: h.color },
                   { icon: Calendar, label: 'Total', value: `${h.totalDaysLogged}d`, color: 'var(--success)' },
                 ].map(({ icon: Icon, label, value, color }) => (
-                  <div key={label} style={{ background: 'var(--bg-input)', borderRadius: 10, padding: '8px 10px', textAlign: 'center' }}>
+                  <div key={label} style={{ background: 'var(--stat-card-bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 10px', textAlign: 'center' }}>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 2 }}>{label}</div>
                     <div style={{ fontWeight: 700, fontSize: '0.9375rem', color }}>{value}</div>
                   </div>
@@ -181,7 +183,7 @@ export default function HabitsPage() {
                   <textarea className="form-input" value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} placeholder="Optional description..." rows={2} style={{ resize: 'vertical' }} />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
                   <div className="form-group">
                     <label className="form-label">Category</label>
                     <select className="form-input" value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}>
@@ -199,7 +201,7 @@ export default function HabitsPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
                   <div className="form-group">
                     <label className="form-label">Target Hours/Day</label>
                     <input type="number" className="form-input" min={0.5} max={24} step={0.5} value={form.targetHoursPerDay} onChange={e => setForm(p => ({ ...p, targetHoursPerDay: parseFloat(e.target.value) }))} />
@@ -211,7 +213,7 @@ export default function HabitsPage() {
                 </div>
 
                 {/* Preview */}
-                <div style={{ background: 'var(--bg-input)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, border: `1px solid ${form.color}30` }}>
+                <div style={{ background: 'var(--stat-card-bg)', borderRadius: 8, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12, border: `1px solid ${form.color}40` }}>
                   <div style={{ width: 40, height: 40, borderRadius: 10, background: `${form.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem' }}>{form.icon}</div>
                   <div>
                     <div style={{ fontWeight: 600 }}>{form.name || 'Habit Name'}</div>

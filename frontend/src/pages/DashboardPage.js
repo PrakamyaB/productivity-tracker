@@ -6,7 +6,7 @@ import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend
 } from 'recharts';
-import { Clock, Flame, Target, TrendingUp, Download, RefreshCw, Lightbulb, Award } from 'lucide-react';
+import { Clock, Flame, TrendingUp, Download, RefreshCw, Lightbulb, Award, CheckCircle2 } from 'lucide-react';
 import { analyticsAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
@@ -41,6 +41,55 @@ const CustomTooltip = ({ active, payload, label }) => {
 const Skeleton = ({ h = 20, w = '100%', r = 8 }) => (
   <div className="skeleton" style={{ height: h, width: w, borderRadius: r }} />
 );
+
+const ConsistencyPanel = ({ overview, weekly = [] }) => {
+  const todayTotal = overview?.today?.total || 0;
+  const todayCompleted = overview?.today?.completed || 0;
+  const completionRate = todayTotal ? Math.round((todayCompleted / todayTotal) * 100) : 0;
+  const currentStreak = overview?.currentBestStreak || 0;
+  const maxHours = Math.max(...weekly.map(w => w.hours || 0), 1);
+  const recentWeeks = weekly.slice(-7);
+
+  return (
+    <div className="card card-padding" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 22, alignItems: 'center', background: 'linear-gradient(135deg, var(--stat-card-bg), rgba(229,242,255,0.42))' }}>
+      <div>
+        <div className="badge" style={{ background: 'var(--accent-light)', color: 'var(--accent)', marginBottom: 14 }}>Progress pulse</div>
+        <h2 style={{ fontSize: '1.45rem', marginBottom: 8 }}>Consistency at a glance</h2>
+        <p style={{ color: 'var(--text-secondary)', fontWeight: 600, maxWidth: 520 }}>
+          Stay focused on the two numbers that matter today: completion and streak momentum.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 18, alignItems: 'center' }}>
+        <div style={{ width: 124, height: 124, borderRadius: '50%', background: `conic-gradient(var(--accent) ${completionRate * 3.6}deg, var(--border) 0deg)`, display: 'grid', placeItems: 'center', margin: '0 auto' }}>
+          <div style={{ width: 94, height: 94, borderRadius: '50%', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', textAlign: 'center', border: '1px solid var(--border)' }}>
+            <strong style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', color: 'var(--text-primary)' }}>{completionRate}%</strong>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: 700 }}>today</span>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Flame size={18} color="#e9a94f" />
+            <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Current streak</span>
+            <strong style={{ marginLeft: 'auto', color: 'var(--text-primary)' }}>{currentStreak} days</strong>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <CheckCircle2 size={18} color="var(--success)" />
+            <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Done today</span>
+            <strong style={{ marginLeft: 'auto', color: 'var(--text-primary)' }}>{todayCompleted}/{todayTotal}</strong>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'end', gap: 8, height: 54, paddingTop: 8 }}>
+            {recentWeeks.map((week, index) => (
+              <div key={`${week.week}-${index}`} title={`${week.hours || 0}h`} style={{ flex: 1, minWidth: 12, height: `${Math.max(10, ((week.hours || 0) / maxHours) * 48)}px`, background: index % 2 ? 'var(--pink)' : 'var(--blue)', borderRadius: 8 }} />
+            ))}
+            {recentWeeks.length === 0 && <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Log activity to see weekly bars.</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -117,9 +166,10 @@ export default function DashboardPage() {
           color="#f29ac2" />
       </div>
        <AIInsights />
+      <ConsistencyPanel overview={overview} weekly={charts?.weekly || []} />
 
       {/* Main charts row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 20 }}>
+      <div className="dashboard-chart-grid">
         {/* Daily trend */}
         <div className="card card-padding">
           <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 700, marginBottom: 20 }}>
@@ -171,7 +221,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Weekly + Day of week charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+      <div className="dashboard-two-grid">
         <div className="card card-padding">
           <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 700, marginBottom: 20 }}>
             Weekly Summary — Last 12 Weeks

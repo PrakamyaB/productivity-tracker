@@ -99,6 +99,14 @@
   --accent: #bdb2ff;
   --accent-light: #332b5f;
   --accent-hover: #d8b4fe;
+  --pink: #f6a6c9;
+  --pink-light: #3a2638;
+  --blue: #8fc5ff;
+  --blue-light: #203247;
+  --lilac: #c9b7ff;
+  --lilac-light: #30284f;
+  --lime: #d8f45b;
+  --paper: #251f34;
 
   --success: #34d399;
   --success-light: #064e3b;
@@ -208,7 +216,7 @@ input, textarea, select { font-family: var(--font-body); }
   padding: 10px 20px;
   border-radius: var(--radius-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 700;
   font-family: var(--font-body);
   transition: all var(--transition);
   white-space: nowrap;
@@ -229,7 +237,7 @@ input, textarea, select { font-family: var(--font-body); }
 }
 
 .btn-secondary {
-  background: rgba(255,255,255,0.62);
+  background: var(--stat-card-bg);
   color: var(--text-primary);
   border: 1px solid var(--border);
 }
@@ -274,13 +282,13 @@ input, textarea, select { font-family: var(--font-body); }
 
 .form-label {
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--text-secondary);
   letter-spacing: 0.01em;
 }
 
 .form-input {
-  background: rgba(255,255,255,0.64);
+  background: var(--stat-card-bg);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
   padding: 10px 14px;
@@ -296,6 +304,18 @@ input, textarea, select { font-family: var(--font-body); }
   box-shadow: 0 0 0 4px rgba(201,183,255,0.25);
 }
 .form-input::placeholder { color: var(--text-muted); }
+
+.dashboard-chart-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+}
+
+.dashboard-two-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
 
 .form-input.error { border-color: var(--danger); }
 .form-error { font-size: 0.8125rem; color: var(--danger); margin-top: 2px; }
@@ -416,6 +436,10 @@ select.form-input { cursor: pointer; }
 @media (max-width: 1024px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-chart-grid,
+  .dashboard-two-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
@@ -433,5 +457,11 @@ select.form-input { cursor: pointer; }
   }
   .grid-2, .grid-3, .grid-4 {
     grid-template-columns: 1fr;
+  }
+  .card-padding {
+    padding: 18px;
+  }
+  .btn {
+    min-height: 42px;
   }
 }

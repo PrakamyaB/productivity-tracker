@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle2, Circle, Clock, ChevronUp, ChevronDown, Smile, MessageSquare } from 'lucide-react';
 import { useHabits } from '../hooks/useData';
 import { useTodayLogs } from '../hooks/useData';
@@ -84,7 +85,7 @@ export default function TodayPage() {
       </div>
 
       {/* Summary bar */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14 }}>
         {[
           { label: 'Hours Logged', value: `${Math.round(totalHoursToday * 10) / 10}h`, color: 'var(--accent)' },
           { label: 'Habits Done', value: `${completedCount}/${habits.length}`, color: 'var(--success)' },
@@ -107,7 +108,7 @@ export default function TodayPage() {
           <div className="progress-bar" style={{ height: 8 }}>
             <div className="progress-fill" style={{
               width: habits.length ? `${(completedCount / habits.length) * 100}%` : '0%',
-              background: 'linear-gradient(90deg, var(--accent), #8b5cf6)',
+              background: 'linear-gradient(90deg, var(--accent), var(--pink))',
             }} />
           </div>
         </div>
@@ -117,8 +118,9 @@ export default function TodayPage() {
       {habits.length === 0 ? (
         <div className="card card-padding" style={{ textAlign: 'center', padding: '48px 24px' }}>
           <div style={{ fontSize: '3rem', marginBottom: 12 }}>📋</div>
-          <h3 style={{ fontFamily: 'var(--font-display)', marginBottom: 8 }}>No habits yet</h3>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Go to Habits to add your first habit, then come back to log your progress.</p>
+          <h3 style={{ fontFamily: 'var(--font-display)', marginBottom: 8 }}>No habits yet. Add one to start.</h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: 18 }}>Create one daily habit and your progress will show up here.</p>
+          <Link to="/habits" className="btn btn-primary">Add first habit</Link>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -135,7 +137,7 @@ export default function TodayPage() {
               <div key={habit._id} className="card" style={{ overflow: 'hidden', border: completed ? `1px solid ${habit.color}40` : undefined }}>
                 {/* Main row */}
                 <div
-                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 20px', cursor: 'pointer' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 20px', cursor: 'pointer', flexWrap: 'wrap' }}
                   onClick={() => setExpanded(p => ({ ...p, [habit._id]: !p[habit._id] }))}
                 >
                   {/* Color dot + icon */}
@@ -160,7 +162,7 @@ export default function TodayPage() {
                   </div>
 
                   {/* Hours display */}
-                  <div style={{ textAlign: 'right', marginRight: 8 }}>
+                  <div style={{ textAlign: 'right', marginRight: 8, marginLeft: 'auto' }}>
                     <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.125rem', color: habit.color }}>
                       {hours}h
                     </div>
@@ -182,12 +184,12 @@ export default function TodayPage() {
                 {isExpanded && (
                   <div style={{ padding: '0 20px 20px', borderTop: '1px solid var(--border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
                     {/* Hours stepper */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                         <Clock size={15} color="var(--text-muted)" />
                         <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>Hours Spent</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginLeft: 'auto' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginLeft: 'auto', flexWrap: 'wrap' }}>
                         <button onClick={() => handleHoursChange(habit._id, -0.5)} className="btn btn-secondary btn-sm" style={{ padding: '4px 10px', minWidth: 32 }}>−</button>
                         <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.25rem', minWidth: 48, textAlign: 'center' }}>{hours}h</span>
                         <button onClick={() => handleHoursChange(habit._id, 0.5)} className="btn btn-secondary btn-sm" style={{ padding: '4px 10px', minWidth: 32 }}>+</button>
