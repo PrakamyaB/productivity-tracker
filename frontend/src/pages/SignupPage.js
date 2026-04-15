@@ -53,13 +53,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', padding: '40px 20px' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #fbf7ff 0%, #fff6fb 46%, #e5f2ff 100%)', padding: '40px 20px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', width: 280, height: 280, borderRadius: '50%', background: 'rgba(242,154,194,0.24)', top: -80, left: -60 }} />
+      <div style={{ position: 'absolute', width: 340, height: 340, borderRadius: '50%', background: 'rgba(127,185,242,0.22)', bottom: -120, right: -80 }} />
       <div style={{ width: '100%', maxWidth: 440 }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 36 }}>
           <div style={{
             width: 52, height: 52, borderRadius: 14,
-            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            background: 'linear-gradient(135deg, var(--accent), var(--pink))',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 16px', boxShadow: '0 8px 24px rgba(99,102,241,0.35)',
           }}>
@@ -73,7 +75,8 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <div className="card card-padding">
+        <div className="card card-padding" style={{ position: 'relative' }}>
+          <span style={{ position: 'absolute', right: 18, top: 12, color: 'var(--pink)', fontSize: '1.4rem' }}>*</span>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div className="form-group">
               <label className="form-label">Full Name</label>

@@ -64,14 +64,14 @@ export default function AppLayout() {
 
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         {/* Logo */}
-        <div style={{ padding: '24px 20px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ padding: '24px 20px 16px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Zap size={16} color="white" fill="white" />
+            <div style={{ width: 34, height: 34, borderRadius: 8, background: 'linear-gradient(135deg, var(--pink-light), var(--blue-light))', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Zap size={16} color="var(--accent)" fill="var(--accent)" />
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '0.9375rem', color: '#fff', letterSpacing: '-0.02em' }}>ProductivityOS</div>
-              <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.35)', marginTop: -1 }}>Student Edition</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '0.9375rem', color: 'var(--text-primary)' }}>ProductivityOS</div>
+              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: -1 }}>Student Edition</div>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function AppLayout() {
         <nav style={{ padding: '12px 10px', flex: 1, overflowY: 'auto' }}>
           {NAV_SECTIONS.map(({ label, items }) => (
             <div key={label} style={{ marginBottom: 4 }}>
-              <div style={{ fontSize: '0.6rem', fontWeight: 700, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '10px 10px 4px' }}>
+              <div style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '10px 10px 4px' }}>
                 {label}
               </div>
               {items.map(({ to, icon: Icon, label: itemLabel, badge }) => (
@@ -90,11 +90,12 @@ export default function AppLayout() {
                   onClick={() => setSidebarOpen(false)}
                   style={({ isActive }) => ({
                     display: 'flex', alignItems: 'center', gap: 9,
-                    padding: '8px 10px', borderRadius: 9, marginBottom: 1,
+                    padding: '8px 10px', borderRadius: 8, marginBottom: 4,
                     fontSize: '0.8375rem', fontWeight: 500, textDecoration: 'none',
-                    color: isActive ? '#fff' : 'rgba(255,255,255,0.48)',
-                    background: isActive ? 'rgba(99,102,241,0.22)' : 'transparent',
-                    borderLeft: isActive ? '3px solid #6366f1' : '3px solid transparent',
+                    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    background: isActive ? 'linear-gradient(135deg, var(--lilac-light), var(--pink-light))' : 'transparent',
+                    border: isActive ? '1px solid var(--border)' : '1px solid transparent',
+                    boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
                     transition: 'all 0.15s',
                   })}
                 >
@@ -108,25 +109,25 @@ export default function AppLayout() {
         </nav>
 
         {/* Bottom */}
-        <div style={{ padding: '12px 10px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <button onClick={toggle} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 9, background: 'transparent', color: 'rgba(255,255,255,0.45)', fontSize: '0.8375rem', fontWeight: 500, width: '100%', border: 'none', cursor: 'pointer', marginBottom: 4, fontFamily: 'var(--font-body)', transition: 'all 0.15s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = '#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}>
+        <div style={{ padding: '12px 10px', borderTop: '1px solid var(--border)' }}>
+          <button onClick={toggle} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '8px 10px', borderRadius: 8, background: 'transparent', color: 'var(--text-secondary)', fontSize: '0.8375rem', fontWeight: 500, width: '100%', border: 'none', cursor: 'pointer', marginBottom: 4, fontFamily: 'var(--font-body)', transition: 'all 0.15s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--lilac-light)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}>
             {dark ? <Sun size={15} /> : <Moon size={15} />}
             {dark ? 'Light Mode' : 'Dark Mode'}
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', marginTop: 4 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 700, color: 'white', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px', borderRadius: 8, background: 'rgba(255,255,255,0.62)', border: '1px solid var(--border)', marginTop: 4 }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, var(--accent), var(--pink))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 700, color: 'white', flexShrink: 0 }}>
               {initials}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name}</div>
-              <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name}</div>
+              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
             </div>
-            <button onClick={handleLogout} title="Logout" style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', padding: 4, borderRadius: 6, transition: 'color 0.15s' }}
+            <button onClick={handleLogout} title="Logout" style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4, borderRadius: 6, transition: 'color 0.15s' }}
               onMouseEnter={e => e.currentTarget.style.color = '#f87171'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.3)'}>
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
               <LogOut size={15} />
             </button>
           </div>

@@ -48,7 +48,7 @@ export default function LoginPage() {
       {/* Left - decorative */}
       <div style={{
         flex: 1,
-        background: 'linear-gradient(135deg, #0f0e17 0%, #1a1a2e 50%, #16213e 100%)',
+        background: 'linear-gradient(135deg, #ffe1ef 0%, #f0eaff 48%, #e5f2ff 100%)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -60,29 +60,29 @@ export default function LoginPage() {
         {/* Background dots */}
         <div style={{
           position: 'absolute', inset: 0,
-          backgroundImage: 'radial-gradient(rgba(99,102,241,0.15) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(124,111,242,0.16) 1px, transparent 1px)',
           backgroundSize: '32px 32px',
         }} />
         {/* Glow */}
         <div style={{
           position: 'absolute', width: 400, height: 400,
-          background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(242,154,194,0.28) 0%, transparent 70%)',
           borderRadius: '50%', top: '30%', left: '50%', transform: 'translate(-50%, -50%)',
         }} />
 
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: 380 }}>
           <div style={{
             width: 64, height: 64, borderRadius: 18,
-            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            background: 'linear-gradient(135deg, var(--accent), var(--pink))',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 28px', boxShadow: '0 8px 32px rgba(99,102,241,0.4)',
           }}>
             <Zap size={30} color="white" fill="white" />
           </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: '#fff', marginBottom: 16, lineHeight: 1.1 }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 16, lineHeight: 1.1 }}>
             Track what<br />matters most.
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1rem', lineHeight: 1.7 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7 }}>
             Build habits, log study hours, and gain insights into your productivity patterns.
           </p>
 
@@ -90,9 +90,9 @@ export default function LoginPage() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 32, justifyContent: 'center' }}>
             {['📊 Analytics', '🔥 Streaks', '🎯 Goals', '💡 Insights'].map(f => (
               <span key={f} style={{
-                background: 'rgba(255,255,255,0.07)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: 'rgba(255,255,255,0.7)',
+                background: 'rgba(255,255,255,0.62)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-secondary)',
                 padding: '6px 14px',
                 borderRadius: 99,
                 fontSize: '0.8125rem',

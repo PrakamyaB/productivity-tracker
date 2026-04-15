@@ -10,13 +10,14 @@ import { Clock, Flame, Target, TrendingUp, Download, RefreshCw, Lightbulb, Award
 import { analyticsAPI } from '../services/api';
 import toast from 'react-hot-toast';
 
-const CHART_COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#14b8a6'];
+const CHART_COLORS = ['#7c6ff2', '#f29ac2', '#7fb9f2', '#d8f45b', '#78b96e', '#c9b7ff', '#e9a94f'];
 
 const StatCard = ({ icon: Icon, label, value, sub, color = 'var(--accent)' }) => (
-  <div className="card card-padding" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+  <div className="card card-padding" style={{ display: 'flex', flexDirection: 'column', gap: 12, minHeight: 136, background: `linear-gradient(145deg, ${color}22, rgba(255,255,255,0.72))`, position: 'relative', overflow: 'hidden' }}>
+    <span style={{ position: 'absolute', right: 16, top: 10, fontSize: '1.4rem', color, opacity: 0.55 }}>*</span>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <span style={{ fontSize: '0.8rem', fontWeight: 500, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{label}</span>
-      <div style={{ width: 36, height: 36, borderRadius: 10, background: `${color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase' }}>{label}</span>
+      <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(255,255,255,0.72)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={18} color={color} />
       </div>
     </div>
@@ -78,18 +79,21 @@ export default function DashboardPage() {
   const { overview, charts, insights } = data || {};
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 28, animation: 'fadeIn 0.4s ease' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, animation: 'fadeIn 0.4s ease' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-        <div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, marginBottom: 4 }}>
+      <div className="card card-padding" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 18, background: 'linear-gradient(135deg, rgba(255,225,239,0.82), rgba(229,242,255,0.82) 52%, rgba(240,234,255,0.9))', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', left: -40, bottom: -70, width: 260, height: 260, border: '2px solid rgba(216,244,91,0.65)', borderRadius: '50%' }} />
+        <div style={{ position: 'absolute', right: 34, top: 18, fontSize: '2rem', color: 'var(--accent)', opacity: 0.55 }}>*</div>
+        <div style={{ position: 'relative' }}>
+          <div className="badge" style={{ background: 'rgba(255,255,255,0.62)', border: '1px solid var(--border)', color: 'var(--text-secondary)', marginBottom: 14 }}>Weekly study desk</div>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 4.2rem)', fontWeight: 800, marginBottom: 4, lineHeight: 0.98 }}>
             {getGreeting()}, {user?.name?.split(' ')[0]} 👋
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.98rem' }}>
             {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div style={{ display: 'flex', gap: 10, position: 'relative', flexWrap: 'wrap' }}>
           <button onClick={refresh} className="btn btn-secondary btn-sm">
             <RefreshCw size={14} /> Refresh
           </button>
@@ -103,14 +107,14 @@ export default function DashboardPage() {
       <div className="grid-4">
         <StatCard icon={Clock} label="Today's Hours" value={`${overview?.today?.hours || 0}h`}
           sub={`${overview?.today?.completed || 0}/${overview?.today?.total || 0} habits completed`}
-          color="var(--accent)" />
+          color="#7c6ff2" />
         <StatCard icon={TrendingUp} label="This Week" value={`${overview?.week?.hours || 0}h`}
-          sub="Total hours logged" color="#10b981" />
+          sub="Total hours logged" color="#7fb9f2" />
         <StatCard icon={Flame} label="Best Streak" value={`${overview?.longestStreak || 0} days`}
-          sub={`Current: ${overview?.currentBestStreak || 0} days`} color="#f59e0b" />
+          sub={`Current: ${overview?.currentBestStreak || 0} days`} color="#e9a94f" />
         <StatCard icon={Award} label="Most Consistent" value={overview?.mostConsistentHabit?.name || '—'}
           sub={overview?.mostConsistentHabit ? `${overview.mostConsistentHabit.days} days logged` : 'Start logging!'}
-          color="#ec4899" />
+          color="#f29ac2" />
       </div>
        <AIInsights />
 
@@ -125,8 +129,8 @@ export default function DashboardPage() {
             <AreaChart data={charts?.daily || []} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
               <defs>
                 <linearGradient id="colorHours" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#f29ac2" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#7fb9f2" stopOpacity={0.04} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -134,8 +138,8 @@ export default function DashboardPage() {
                 tickFormatter={v => v.slice(5)} interval={4} />
               <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
               <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="hours" name="Hours" stroke="#6366f1" strokeWidth={2.5}
-                fill="url(#colorHours)" dot={false} activeDot={{ r: 5, fill: '#6366f1' }} />
+              <Area type="monotone" dataKey="hours" name="Hours" stroke="#7c6ff2" strokeWidth={2.5}
+                fill="url(#colorHours)" dot={false} activeDot={{ r: 5, fill: '#f29ac2' }} />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -178,7 +182,7 @@ export default function DashboardPage() {
               <XAxis dataKey="week" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
               <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="hours" name="Hours" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="hours" name="Hours" fill="#c9b7ff" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -193,7 +197,7 @@ export default function DashboardPage() {
               <XAxis dataKey="day" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
               <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="avgHours" name="Avg Hours" fill="#10b981" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="avgHours" name="Avg Hours" fill="#7fb9f2" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
