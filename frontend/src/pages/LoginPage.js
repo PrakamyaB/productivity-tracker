@@ -39,11 +39,6 @@ export default function LoginPage() {
     }
   };
 
-  const fillDemo = () => {
-    setForm({ email: 'demo@example.com', password: 'demo123456' });
-    setErrors({});
-  };
-
   return (
     <div style={{
       minHeight: '100vh',
@@ -176,9 +171,6 @@ export default function LoginPage() {
             )}
           </button>
 
-          <button type="button" onClick={fillDemo} className="btn btn-secondary" style={{ fontSize: '0.8125rem' }}>
-            🎮 Try with demo account
-          </button>
         </form>
 
         <p style={{ marginTop: 28, textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
