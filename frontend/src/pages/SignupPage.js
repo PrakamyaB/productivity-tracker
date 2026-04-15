@@ -4,30 +4,6 @@ import { User, Mail, Lock, Eye, EyeOff, Zap, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-const Field = ({ name, label, type = 'text', icon: Icon, placeholder, autoComplete, value, error, onChange, toggle, showPw }) => (
-  <div className="form-group">
-    <label className="form-label">{label}</label>
-    <div style={{ position: 'relative' }}>
-      <Icon size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-      <input
-        type={type}
-        className={`form-input ${error ? 'error' : ''}`}
-        style={{ paddingLeft: 40, paddingRight: toggle ? 44 : undefined }}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        autoComplete={autoComplete}
-      />
-      {toggle && (
-        <button type="button" onClick={toggle} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}>
-          {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-        </button>
-      )}
-    </div>
-    {error && <span className="form-error">{error}</span>}
-  </div>
-);
-
 export default function SignupPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
   const [showPw, setShowPw] = useState(false);
@@ -87,39 +63,60 @@ export default function SignupPage() {
 
         <div className="card card-padding">
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <Field
-              name="name"
-              label="Full Name"
-              icon={User}
-              placeholder="Alex Johnson"
-              autoComplete="name"
-              value={form.name}
-              error={errors.name}
-              onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-            />
-            <Field
-              name="email"
-              label="Email address"
-              icon={Mail}
-              placeholder="alex@example.com"
-              autoComplete="email"
-              value={form.email}
-              error={errors.email}
-              onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
-            />
-            <Field
-              name="password"
-              label="Password"
-              type={showPw ? 'text' : 'password'}
-              icon={Lock}
-              placeholder="Min. 6 characters"
-              autoComplete="new-password"
-              value={form.password}
-              error={errors.password}
-              onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
-              toggle={() => setShowPw(p => !p)}
-              showPw={showPw}
-            />
+            <div className="form-group">
+              <label className="form-label">Full Name</label>
+              <div style={{ position: 'relative' }}>
+                <User size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <input
+                  type="text"
+                  className={`form-input ${errors.name ? 'error' : ''}`}
+                  style={{ paddingLeft: 40 }}
+                  placeholder="Alex Johnson"
+                  value={form.name}
+                  onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
+                  autoComplete="name"
+                />
+              </div>
+              {errors.name && <span className="form-error">{errors.name}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Email address</label>
+              <div style={{ position: 'relative' }}>
+                <Mail size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <input
+                  type="email"
+                  className={`form-input ${errors.email ? 'error' : ''}`}
+                  style={{ paddingLeft: 40 }}
+                  placeholder="alex@example.com"
+                  value={form.email}
+                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                  autoComplete="email"
+                />
+              </div>
+              {errors.email && <span className="form-error">{errors.email}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Password</label>
+              <div style={{ position: 'relative' }}>
+                <Lock size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <input
+                  type={showPw ? 'text' : 'password'}
+                  className={`form-input ${errors.password ? 'error' : ''}`}
+                  style={{ paddingLeft: 40, paddingRight: 44 }}
+                  placeholder="Min. 6 characters"
+                  value={form.password}
+                  onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
+                  autoComplete="new-password"
+                />
+                <button type="button" onClick={() => setShowPw(p => !p)} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}>
+                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+              {errors.password && <span className="form-error">{errors.password}</span>}
+            </div>
+
             <div className="form-group">
               <label className="form-label">Confirm Password</label>
               <div style={{ position: 'relative' }}>
