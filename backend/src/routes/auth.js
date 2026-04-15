@@ -1,8 +1,11 @@
 const express = require('express');
+const { body } = require('express-validator');
+const authenticate = require('../middleware/auth');
+const { signup, login, getMe, logout } = require('../controllers/authController');
+
 const router = express.Router();
 
-// Dummy controller functions (replace with your actual logic if needed)
-const signupController = async (req, res) => {
+const unusedSignupController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -20,7 +23,7 @@ const signupController = async (req, res) => {
   }
 };
 
-const loginController = async (req, res) => {
+const unusedLoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -42,13 +45,34 @@ const loginController = async (req, res) => {
 // 🔥 IMPORTANT PART (YOUR BUG WAS HERE)
 
 // Signup route
-router.post('/signup', signupController);
+const signupValidation = [
+  body('name')
+    .trim()
+    .isLength({ min: 2, max: 50 })
+    .withMessage('Name must be between 2 and 50 characters.'),
+  body('email')
+    .isEmail()
+    .normalizeEmail()
+    .withMessage('Please enter a valid email address.'),
+  body('password')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters.'),
+];
 
-router.post('/signup', (req, res) => {
-  res.status(200).json({ message: "NEW SIGNUP ROUTE WORKING" });
-});
+const loginValidation = [
+  body('email')
+    .isEmail()
+    .normalizeEmail()
+    .withMessage('Please enter a valid email address.'),
+  body('password')
+    .notEmpty()
+    .withMessage('Password is required.'),
+];
 
-// Login route
-router.post('/login', loginController);
+router.post('/signup', signupValidation, signup);
+
+router.post('/login', loginValidation, login);
+router.get('/me', authenticate, getMe);
+router.post('/logout', logout);
 
 module.exports = router;
